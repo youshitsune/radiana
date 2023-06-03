@@ -33,7 +33,7 @@ def login():
                 session['username'] = request.form['username']
                 session['logged'] = True
                 return redirect("http://localhost:5000")
-    return render_template('auth.html', error=error)
+    return render_template('login.html', error=error)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
