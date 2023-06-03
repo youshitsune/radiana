@@ -38,15 +38,20 @@ def login():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    error = None
     if request.method == 'POST':
         con = sqlite3.connect("database.db")
         cur = con.cursor()
-        cur.execute("INSERT INTO users VALUES(?, ?)", (request.form['username'], hashlib.sha512(request.form['password'].encode()).hexdigest(), ))
-        cur.execute("INSERT INTO wallets VALUES(?, ?, ?)", (request.form['username'], secrets.token_hex(), 0))
-        con.commit()
+        res = cur.execute("SELECT name FROM users WHERE name=?", (request.form['username'],))
+        if res.fetchone() is None:
+            cur.execute("INSERT INTO users VALUES(?, ?)", (request.form['username'], hashlib.sha512(request.form['password'].encode()).hexdigest(), ))
+            cur.execute("INSERT INTO wallets VALUES(?, ?, ?)", (request.form['username'], secrets.token_hex(), 0))
+            con.commit()
+            return redirect("http://localhost:5000")
+        else:
+            error = "That username is already in use."
         con.close()
-        return redirect("http://localhost:5000")
-    return render_template("register.html")
+    return render_template("register.html", error=error)
 
 @app.route("/explorer", methods=['GET', 'POST'])
 def explorer():
