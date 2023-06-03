@@ -62,6 +62,28 @@ def explorer():
         return str(res.fetchone()[0])
     return render_template("explorer.html")
         
+@app.route("/send", methods=['GET', 'POST'])
+def send():
+    error = None
+    if request.method == 'POST':
+        con = sqlite3.connect("database.db")
+        cur = con.cursor()
+        res = cur.execute("SELECT wallet FROM wallets WHERE wallet=?", (request.form['wallet'], ))
+        if res.fetchone() is None:
+            error = "This wallet doesn't exist"
+        else:
+            res = cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username'], ))
+            if res.fetchone()[0] < int(request.form['amount']):
+                error = "You don't have that much radiana in your wallet"
+            else:
+                res = cur.execute("SELECT bal FROM wallets WHERE wallet=?", (request.form['wallet'],)).fetchone()[0]
+                cur.execute("UPDATE wallets SET bal = ? WHERE wallet = ?", (res+int(request.form['amount']), request.form['wallet'],))
+                cur.execute("UPDATE wallets SET bal = ? WHERE name=?", (session['bal']-int(request.form['amount']), session['username']))
+                con.commit()
+                return redirect("http://localhost:5000")
+        con.close()
+    return render_template("send.html", error=error)
+                
 
 
 
