@@ -14,7 +14,10 @@ def index():
     except KeyError:
         return render_template("index.html")
     else:
-        return render_template("index_acc.html", name=session['username'], bal=session['bal'])
+        con = sqlite3.connect("database.db")
+        cur = con.cursor()
+        return render_template("index_acc.html", name=session['username'], bal=cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username'],)))
+        con.close()
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -32,7 +35,6 @@ def login():
             else:
                 session['username'] = request.form['username']
                 session['logged'] = True
-                session['bal'] = cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username'], )).fetchone()[0]
                 return redirect("http://localhost:5000")
     return render_template('login.html', error=error)
 
@@ -78,7 +80,7 @@ def send():
             else:
                 res = cur.execute("SELECT bal FROM wallets WHERE wallet=?", (request.form['wallet'],)).fetchone()[0]
                 cur.execute("UPDATE wallets SET bal = ? WHERE wallet = ?", (res+int(request.form['amount']), request.form['wallet'],))
-                cur.execute("UPDATE wallets SET bal = ? WHERE name=?", (session['bal']-int(request.form['amount']), session['username']))
+                cur.execute("UPDATE wallets SET bal = ? WHERE name=?", (cur.execute("SELECT bal FROM wallets WHERE name=?", (session='username'), ).fetchone()[0]-int(request.form['amount']), session['username']))
                 con.commit()
                 return redirect("http://localhost:5000")
         con.close()
