@@ -2,13 +2,19 @@ from flask import Flask, render_template, request, session, redirect
 import sqlite3
 import hashlib
 import os
+import secrets
 
 app = Flask(__name__)
 app.secret_key = os.getenv("secret")
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    try:
+        tried = session['logged']
+    except KeyError:
+        return render_template("index.html")
+    else:
+        return render_template("index.html")
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -29,9 +35,18 @@ def login():
                 return redirect("http://localhost:5000")
     return render_template('auth.html', error=error)
 
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
-    return "This is register page"
+    if request.method == 'POST':
+        con = sqlite3.connect("database.db")
+        cur = con.cursor()
+        cur.execute("INSERT INTO users VALUES(?, ?)", (request.form['username'], hashlib.sha512(request.form['password'].encode()).hexdigest(), ))
+        con.commit()
+        con.close()
+        return redirect("http://localhost:5000")
+    return render_template("register.html")
+
+
 
 app.run()
 
