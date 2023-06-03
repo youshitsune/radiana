@@ -16,7 +16,7 @@ def index():
     else:
         con = sqlite3.connect("database.db")
         cur = con.cursor()
-        return render_template("index_acc.html", name=session['username'], bal=cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username'],)))
+        return render_template("index_acc.html", name=session['username'], bal=cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username'],)).fetchone()[0])
         con.close()
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -80,14 +80,17 @@ def send():
             else:
                 res = cur.execute("SELECT bal FROM wallets WHERE wallet=?", (request.form['wallet'],)).fetchone()[0]
                 cur.execute("UPDATE wallets SET bal = ? WHERE wallet = ?", (res+int(request.form['amount']), request.form['wallet'],))
-                cur.execute("UPDATE wallets SET bal = ? WHERE name=?", (cur.execute("SELECT bal FROM wallets WHERE name=?", (session='username'), ).fetchone()[0]-int(request.form['amount']), session['username']))
+                cur.execute("UPDATE wallets SET bal = ? WHERE name=?", (cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username']), ).fetchone()[0]-int(request.form['amount']), session['username']))
                 con.commit()
                 return redirect("http://localhost:5000")
         con.close()
     return render_template("send.html", error=error)
                 
-
-
+@app.route("/logout")
+def logout():
+    del session['logged']
+    del session['username']
+    return redirect("http://localhost:5000")
 
 app.run()
 
