@@ -14,7 +14,7 @@ def index():
     except KeyError:
         return render_template("index.html")
     else:
-        return render_template("index.html")
+        return render_template("index_acc.html", name=session['username'])
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -45,6 +45,16 @@ def register():
         con.close()
         return redirect("http://localhost:5000")
     return render_template("register.html")
+
+@app.route("/explorer", methods=['GET', 'POST'])
+def explorer():
+    if request.method == 'POST':
+        con = sqlite3.connect("database.db")
+        cur = con.cursor()
+        res = cur.execute("SELECT bal FROM wallets WHERE wallet=?", (request.form['wallet'], ))
+        return res.fetchone()[0]
+    return render_template("explorer.html")
+        
 
 
 
