@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="123.839mm"
+   height="44.013023mm"
+   viewBox="0 0 123.839 44.013023"
+   version="1.1"
+   id="svg5"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showguides="true"
+     inkscape:lockguides="false">
+    <sodipodi:guide
+       position="-39.353011,-36.620881"
+       orientation="1,0"
+       id="guide1415"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <rect
+       x="368.70132"
+       y="389.99359"
+       width="320.10931"
+       height="150.12555"
+       id="rect1647" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-48.160993,-98.981557)">
+    <g
+       id="g1711"
+       transform="matrix(-1,0,0,1,140.28333,0)">
+      <ellipse
+         style="fill:#000080;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
+         id="path1531"
+         cx="-70.060944"
+         cy="-121.03201"
+         rx="21.899956"
+         ry="21.962563"
+         transform="scale(-1)" />
+      <path
+         id="ellipse1533"
+         style="fill:#ff0000;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
+         d="m 70.222388,98.981759 a 21.899956,21.962563 0 0 0 -0.161749,0.006 v 43.912761 a 21.899956,21.962563 0 0 0 0.161749,0.006 21.899956,21.962563 0 0 0 21.89995,-21.96248 21.899956,21.962563 0 0 0 -21.89995,-21.962481 z" />
+    </g>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,1.4534381,8.5835313)"
+       id="text1645"
+       style="font-size:64px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro';white-space:pre;shape-inside:url(#rect1647);fill:#ff0000;stroke:none;stroke-width:1.13386;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="368.70117"
+         y="445.99414"
+         id="tspan1856"><tspan
+           style="fill:#ffffff"
+           id="tspan1854">RADIANA</tspan></tspan></text>
+  </g>
+</svg>
