@@ -5,11 +5,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <style>
         body{
+            background-color: #414141;
+        }
+        .form{
             display: flex;
             height: 100vh;
             justify-content: center;
             align-items: center;
-            background-color: #414141;
+            flex-direction: column;
         }
         input{
             border-radius: 8px;
@@ -17,15 +20,47 @@
     </style>
     </head>
     <body>
-      <form action="" method="post">
-        <input type="text" placeholder="Wallet Address" name="wallet" value="{{request.form.wallet}}">
-                      <input class="btn btn-primary" type="submit" value="Search" style="align-self: center">
-      </form><br>
-      {% if bal %}
-        <h3>Balance: {{bal}}</h3>
-      {% endif %}
-      {% if error %}
-        <div class="alert alert-danger" role="alert">{{error}}</div>
-      {% endif %}
+        <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="{{ url_for('static', filename='radiana.svg')}}" alt="cryptocurrency" height=50 width=300>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end" style="width: 90% !important">
+                        <li class="nav-item">
+                            <a class="nav-link disabled" >Explorer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/send">Send</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item">Name: {{name}}</li>
+                                <li class="dropdown-item">Balance: {{bal}} RAD</li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="form">
+            <form action="" method="post">
+                <input type="text" placeholder="Wallet Address" name="wallet" value="{{request.form.wallet}}">
+                <input class="btn btn-primary" type="submit" value="Search" style="align-self: center">
+            </form>
+            {% if bal %}
+            <h3 style="color: white;">Balance: {{bal_exp}}</h3>
+            {% endif %}
+            {% if error %}
+            <div class="alert alert-danger" role="alert">{{error}}</div>
+            {% endif %}
+        </div>
     </body>
 </html>
