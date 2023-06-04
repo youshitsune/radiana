@@ -57,12 +57,18 @@ def register():
 
 @app.route("/explorer", methods=['GET', 'POST'])
 def explorer():
+    error = None
+    bal = None
     if request.method == 'POST':
         con = sqlite3.connect("database.db")
         cur = con.cursor()
         res = cur.execute("SELECT bal FROM wallets WHERE wallet=?", (request.form['wallet'], ))
-        return str(res.fetchone()[0])
-    return render_template("explorer.html")
+        if res.fetchone() is None:
+            error = "That wallet doesn't exist"
+        else:
+            res = cur.execute("SELECT bal FROM wallets WHERE wallet=?", (request.form['wallet'], )).fetchone()[0]
+            bal = str(res)
+    return render_template("explorer.html", error=error, bal=bal)
         
 @app.route("/send", methods=['GET', 'POST'])
 def send():
