@@ -7,6 +7,20 @@ import secrets
 app = Flask(__name__)
 app.secret_key = os.getenv("secret")
 
+def get_bal(name):
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    res = cur.execute("SELECT bal FROM wallets WHERE name=?",(name, )).fetchone()[0]
+    con.close()
+    return res
+
+def get_wallet(name):
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    res = cur.execute("SELECT wallet FROM wallets WHERE name=?", (name,)).fetchone()[0]
+    con.close()
+    return res
+
 @app.route("/")
 def index():
     try:
@@ -16,7 +30,7 @@ def index():
     else:
         con = sqlite3.connect("database.db")
         cur = con.cursor()
-        return render_template("index_acc.html", name=session['username'], bal=cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username'],)).fetchone()[0])
+        return render_template("index_acc.html", name=session['username'], bal=get_bal(session['username']), wallet=get_wallet(session['username']))
         con.close()
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -95,7 +109,7 @@ def send():
                     con.commit()
                     return redirect("http://localhost:5000")
             con.close()
-        return render_template("send.html", error=error)
+        return render_template("send.html", error=error, name=session['username'], bal=get_bal(session['username']))
                 
 @app.route("/logout")
 def logout():

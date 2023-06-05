@@ -31,21 +31,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end" style="width: 90% !important">
                         <li class="nav-item">
-                            <a class="nav-link disabled" >Explorer</a>
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/send">Send</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item">Name: {{name}}</li>
-                                <li class="dropdown-item">Balance: {{bal}} RAD</li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-          </ul>
-        </li>
-
                     </ul>
                 </div>
             </div>
@@ -56,7 +43,7 @@
                 <input class="btn btn-primary" type="submit" value="Search" style="align-self: center">
             </form>
             {% if bal %}
-            <h3 style="color: white;">Balance: {{bal_exp}}</h3>
+            <h3 style="color: white;">Balance: {{bal}}</h3>
             {% endif %}
             {% if error %}
             <div class="alert alert-danger" role="alert">{{error}}</div>
