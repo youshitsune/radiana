@@ -49,7 +49,7 @@ def login():
             else:
                 session['username'] = request.form['username']
                 session['logged'] = True
-                return redirect("http://localhost:5000")
+                return redirect("https://rad.youshitsune.tech")
     return render_template('login.html', error=error)
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -63,7 +63,7 @@ def register():
             cur.execute("INSERT INTO users VALUES(?, ?)", (request.form['username'], hashlib.sha512(request.form['password'].encode()).hexdigest(), ))
             cur.execute("INSERT INTO wallets VALUES(?, ?, ?)", (request.form['username'], secrets.token_hex(), 0))
             con.commit()
-            return redirect("http://localhost:5000")
+            return redirect("https://rad.youshitsune.tech")
         else:
             error = "That username is already in use."
         con.close()
@@ -89,7 +89,7 @@ def send():
     try:
         tried = session['logged']
     except KeyError:
-        return redirect("http://localhost:5000")
+        return redirect("https://rad.youshitsune.tech")
     else:
         error = None
         if request.method == 'POST':
@@ -107,7 +107,7 @@ def send():
                     cur.execute("UPDATE wallets SET bal = ? WHERE wallet = ?", (res+int(request.form['amount']), request.form['wallet'],))
                     cur.execute("UPDATE wallets SET bal = ? WHERE name=?", (cur.execute("SELECT bal FROM wallets WHERE name=?", (session['username']), ).fetchone()[0]-int(request.form['amount']), session['username']))
                     con.commit()
-                    return redirect("http://localhost:5000")
+                    return redirect("https://rad.youshitsune.tech")
             con.close()
         return render_template("send.html", error=error, name=session['username'], bal=get_bal(session['username']))
                 
@@ -115,7 +115,7 @@ def send():
 def logout():
     del session['logged']
     del session['username']
-    return redirect("http://localhost:5000")
+    return redirect("https://rad.youshitsune.tech")
 
 app.run()
 
